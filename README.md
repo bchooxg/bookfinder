@@ -1,3 +1,6 @@
-# Project 1
+# Book Finder Application
 
-Web Programming with Python and JavaScript
+Web app contains a database of 5000 books, with average ratings and book cover provided through api calls 
+
+
+This application was built as part of CS50W web programming with Python & Javascript
