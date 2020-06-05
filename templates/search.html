@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Search
+{% endblock %}
+
+{% block content %}
+
+<!-- Creating search form -->
+{% from 'includes/_formhelper.html' import render_field %}
+
+<h3>Search for a book!</h3>
+<form method="POST">
+    <div class="form-group">
+      <div class='form-group'>
+          {{render_field(form.search, class='form-control' ,placeholder='Title/ Author/ Year')}}
+      </div>
+      <small id="bookHelp" class="form-text text-muted">Example: Cosmos or Carl Sagan, 2010</small>
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+{% if request.method =='GET' %}
+<br>
+<blockquote class="blockquote">
+  <p class="lead mb-0">So many books, so little time</p>
+  <footer class="lead blockquote-footer">Frank Zappa</footer>
+</blockquote>
+
+{% endif %}
+
+{% if request.method == 'POST' %}
+<br>
+<div class='container'>
+<table class="table" >
+  <thead>
+    <tr>
+      <th scope="col">ISBN</th>
+      <th scope="col">Author</th>
+      <th scope="col">Title</th>
+      <th scope="col">Year Published</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for result in results %}
+    <tr>
+      <td><a href="/search/{{ result.isbn }}">{{ result.isbn }}</a></td>
+      <td>{{ result.author }}</td>
+      <td>{{ result.title }}</td>
+      <td>{{ result.year }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}

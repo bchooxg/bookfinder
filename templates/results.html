@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+{{ book.title }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container p-5">
+  <div class="row">
+    <div class="col-sm">
+      <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg" width="250px">
+    </div>
+    <div class="col-sm">
+      <h1>{{ book.title }}</h1>
+      <h2>{{ book.author }}</h2>
+      <br>
+      <h3>Year Published :{{ book.year }}</h3>
+      <h3>ISBN No :{{ book.isbn }}</h3>
+      <h3>GoodReads Reviews Count :{{ response['reviews_count'] }}</h3>
+      <h3>GoodReads Rating :{{ response['average_rating'] }}</h3>
+
+
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  {% for re in review %}
+
+  <div class="card border-secondary mb-3" style="width: 20rem">
+    <div class="card-header bg-transparent "><h4 class ='card-text'>{{ re.memberusername }}</h4></div>
+    <div class="card-header bg-transparent ">
+      {% for r in range(re.ratings) %}
+      ★
+      {% endfor %}
+
+
+    </div>
+      <div class="card-body">
+          <h4 class="card-title"></h4>
+          <h6 class="card-text">{{ re.review }}</h6>
+      </div>
+  </div>
+
+
+
+  {% endfor %}
+
+</div>
+
+<div class='container'>
+<form method="POST">
+  {% from 'includes/_formhelper.html' import render_field %}
+
+  {{ render_field(form.review, class='form-control', placeholder='Type Review here') }}
+  <br>
+  <p>Ratings</p>
+  {% for subfield in form.ratings %}
+      <tr>
+          <td>{{ subfield }}</td>
+          <td>{{ subfield.label }}</td>
+      </tr>
+  {% endfor %}
+   <p><input type="submit" class='btn btn-primary' value='Submit'></p>
+
+</form>
+</div>
+
+{% endblock %}
